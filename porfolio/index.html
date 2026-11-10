@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jose Antonio Alcalá | Desarrollador Multiplataforma</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Inter & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0a0f1d',
+                            card: 'rgba(15, 23, 42, 0.6)',
+                            cyan: '#00f2fe',
+                            blue: '#4facfe',
+                            purple: '#7928ca',
+                            accent: '#38bdf8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #070b14;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-panel-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-panel-hover:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(0, 242, 254, 0.15);
+        }
+
+        .glass-nav {
+            background: rgba(7, 11, 20, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #7928ca 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Glow & Background Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070b14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <!-- Background Decorative Glows -->
+    <div class="glow-orb w-[500px] h-[500px] bg-cyan-500 top-0 left-[-100px]"></div>
+    <div class="glow-orb w-[600px] h-[600px] bg-purple-600 top-[30%] right-[-150px]"></div>
+    <div class="glow-orb w-[400px] h-[400px] bg-blue-500 bottom-[10%] left-[20%]"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#hero" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center font-mono font-bold text-white shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                    JA
+                </div>
+                <span class="font-bold text-lg tracking-tight text-white group-hover:text-cyan-400 transition-colors">Jose A. Alcalá</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-1 text-sm font-medium">
+                <a href="#hero" class="px-4 py-2 rounded-full text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition-all">Inicio</a>
+                <a href="#sobre-mi" class="px-4 py-2 rounded-full text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition-all">Perfil</a>
+                <a href="#habilidades" class="px-4 py-2 rounded-full text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition-all">Stack</a>
+                <a href="#trayectoria" class="px-4 py-2 rounded-full text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition-all">Experiencia</a>
+                <a href="#proyectos" class="px-4 py-2 rounded-full text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition-all">Proyectos</a>
+                <a href="#contacto" class="ml-4 px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/30 hover:scale-105 transition-all">Contacto</a>
+            </nav>
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" aria-label="Abrir Menú">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-b border-slate-800 px-4 pt-2 pb-6 space-y-2">
+            <a href="#hero" class="mobile-link block px-4 py-2 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50">Inicio</a>
+            <a href="#sobre-mi" class="mobile-link block px-4 py-2 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50">Perfil</a>
+            <a href="#habilidades" class="mobile-link block px-4 py-2 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50">Stack Técnico</a>
+            <a href="#trayectoria" class="mobile-link block px-4 py-2 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50">Experiencia y Estudios</a>
+            <a href="#proyectos" class="mobile-link block px-4 py-2 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50">Proyectos</a>
+            <a href="#contacto" class="mobile-link block px-4 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-center mt-4">Contacto</a>
+        </div>
+    </header>
+
+    <main class="relative z-10 pt-20">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="min-h-[calc(100vh-80px)] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Text Column -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-cyan-500/30 text-cyan-400 text-xs sm:text-sm font-mono tracking-wide">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                        Búsqueda activa de Prácticas en Empresa
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight">
+                        Hola, soy <br class="hidden sm:inline" />
+                        <span class="text-gradient">Jose Antonio Alcalá</span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-slate-400 font-medium max-w-2xl mx-auto lg:mx-0">
+                        Estudiante de <span class="text-slate-200 font-semibold">Desarrollo de Aplicaciones Multiplataforma (DAM)</span> con especial interés y vocación por el <span class="text-cyan-400 font-semibold">Desarrollo Backend</span>.
+                    </p>
+
+                    <!-- Quick badges -->
+                    <div class="flex flex-wrap gap-3 justify-center lg:justify-start pt-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-300 text-xs font-mono flex items-center gap-2">
+                            <i class="fa-brands fa-java text-orange-400"></i> Java Specialist
+                        </span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-300 text-xs font-mono flex items-center gap-2">
+                            <i class="fa-solid fa-database text-blue-400"></i> SQL & Databases
+                        </span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-slate-300 text-xs font-mono flex items-center gap-2">
+                            <i class="fa-brands fa-aws text-yellow-400"></i> AWS Certified Quest
+                        </span>
+                    </div>
+
+                    <!-- Call To Actions -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-6">
+                        <a href="#contacto" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white font-bold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 transition-all flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-paper-plane"></i> Contactar Conmigo
+                        </a>
+                        <a href="#proyectos" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel text-slate-200 font-semibold hover:bg-slate-800/80 hover:text-white transition-all flex items-center justify-center gap-3 border border-slate-700">
+                            <i class="fa-solid fa-laptop-code text-cyan-400"></i> Ver Proyectos
+                        </a>
+                    </div>
+
+                    <!-- Contact Quick Links -->
+                    <div class="pt-6 flex items-center justify-center lg:justify-start gap-6 text-slate-400 text-sm">
+                        <a href="mailto:jalcalahinojosa@gmail.com" class="hover:text-cyan-400 transition-colors flex items-center gap-2">
+                            <i class="fa-regular fa-envelope text-cyan-400"></i> jalcalahinojosa@gmail.com
+                        </a>
+                        <a href="tel:653187506" class="hover:text-cyan-400 transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-cyan-400"></i> 653-187-506
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Photo / Visual Column -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 animate-float">
+                        <!-- Neon Glow Ring -->
+                        <div class="absolute -inset-1.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 rounded-3xl blur-lg opacity-70 group-hover:opacity-100 transition duration-1000 animate-pulse-slow"></div>
+                        
+                        <!-- Photo Container -->
+                        <div class="relative w-full h-full rounded-3xl overflow-hidden glass-panel border border-slate-700/80 p-2 shadow-2xl">
+                            <!-- User Picture -->
+                            <img src="img/foto.jpeg" alt="Fotografía de Jose Antonio Alcalá" class="w-full h-full object-cover">
+                        </div>
+
+                        <!-- Floating Badges -->
+                        <div class="absolute -bottom-4 -left-4 glass-panel px-4 py-2.5 rounded-xl border border-cyan-500/30 shadow-xl flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-award text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Premio</p>
+                                <p class="text-xs font-bold text-white">Mejor Expediente SMR</p>
+                            </div>
+                        </div>
+
+                        <div class="absolute -top-4 -right-4 glass-panel px-4 py-2.5 rounded-xl border border-purple-500/30 shadow-xl flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-code-branch text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Enfoque</p>
+                                <p class="text-xs font-bold text-white">Backend & Frontend</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- SOBRE MÍ / PERFIL -->
+        <section id="sobre-mi" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-slate-800 relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-4 space-y-4 text-center lg:text-left">
+                        <span class="text-cyan-400 text-sm font-mono tracking-widest uppercase">Perfil Profesional</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Apasionado por la tecnología y el desarrollo</h2>
+                        <div class="h-1 w-20 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full mx-auto lg:mx-0"></div>
+                    </div>
+
+                    <div class="lg:col-span-8 text-slate-300 space-y-4 text-base sm:text-lg leading-relaxed">
+                        <p class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800">
+                            <i class="fa-solid fa-quote-left text-cyan-500 text-2xl mr-3 opacity-60"></i>
+                            Estudiante de desarrollo software orientado a resultados y con constante motivación por aprender nuevas arquitecturas y herramientas. Actualmente me encuentro en <strong class="text-white">búsqueda activa de prácticas en empresa</strong> para aplicar mis competencias técnicas en entornos reales de producción.
+                        </p>
+                        <p>
+                            Tengo un <span class="text-cyan-400 font-semibold">especial interés y vocación por el desarrollo backend</span>, estructurando bases de datos robustas y lógica de negocio sólida. Sin embargo, cuento con la versatilidad necesaria para desempeñarme y colaborar activamente en proyectos <span class="text-purple-400 font-semibold">frontend</span>, adaptándome con agilidad a la pila tecnológica del equipo.
+                        </p>
+                        
+                        <!-- Quick Stats Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4">
+                            <div class="glass-panel p-4 rounded-xl border border-slate-800 text-center">
+                                <span class="text-2xl font-bold text-cyan-400 block">Jaén</span>
+                                <span class="text-xs text-slate-400">Ubicación Actual</span>
+                            </div>
+                            <div class="glass-panel p-4 rounded-xl border border-slate-800 text-center">
+                                <span class="text-2xl font-bold text-purple-400 block">DAM & SMR</span>
+                                <span class="text-xs text-slate-400">Especialidad</span>
+                            </div>
+                            <div class="glass-panel p-4 rounded-xl border border-slate-800 text-center col-span-2 sm:col-span-1">
+                                <span class="text-2xl font-bold text-emerald-400 block">B2</span>
+                                <span class="text-xs text-slate-400">Inglés Certificado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- STACK TÉCNICO / HABILIDADES -->
+        <section id="habilidades" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-cyan-400 text-sm font-mono tracking-widest uppercase">Competencias</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-2">Stack Técnico</h2>
+                <p class="text-slate-400 mt-4 text-base sm:text-lg">Herramientas, lenguajes y entornos de desarrollo con los que trabajo habitualmente.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Category 1: Lenguajes -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-8 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center text-2xl mb-6">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Lenguajes</h3>
+                        <p class="text-slate-400 text-sm mb-6">Bases firmes de programación orientada a objetos y gestión estructurada de datos.</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold mb-1">
+                                    <span class="text-slate-200 flex items-center gap-2"><i class="fa-brands fa-java text-orange-400"></i> Java</span>
+                                    <span class="text-cyan-400 font-mono">Avanzado</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-orange-500 to-amber-400 h-2 rounded-full w-[85%]"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold mb-1">
+                                    <span class="text-slate-200 flex items-center gap-2"><i class="fa-solid fa-database text-blue-400"></i> SQL</span>
+                                    <span class="text-cyan-400 font-mono">Intermedio - Avanzado</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full w-[80%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 2: Frameworks y Entornos -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-8 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl mb-6">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Frameworks y Entornos</h3>
+                        <p class="text-slate-400 text-sm mb-6">Desarrollo móvil, interfaces gráficas de escritorio y sistemas ERP.</p>
+                        
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-slate-200 text-sm font-medium flex items-center gap-2">
+                                <i class="fa-brands fa-android text-emerald-400"></i> Android Studio
+                            </span>
+                            <span class="px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-slate-200 text-sm font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-window-maximize text-blue-400"></i> Java Swing
+                            </span>
+                            <span class="px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-slate-200 text-sm font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-boxes-stacked text-purple-400"></i> Odoo ERP
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 3: Herramientas -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-8 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-2xl mb-6">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Herramientas & IDEs</h3>
+                        <p class="text-slate-400 text-sm mb-6">Control de versiones y entornos integrados de desarrollo.</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                                <span class="text-slate-200 text-sm font-medium flex items-center gap-3">
+                                    <i class="fa-brands fa-github text-white text-lg"></i> GitHub
+                                </span>
+                                <span class="text-xs text-slate-400 font-mono">Control de Código</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                                <span class="text-slate-200 text-sm font-medium flex items-center gap-3">
+                                    <i class="fa-solid fa-code text-blue-400 text-lg"></i> VS Code
+                                </span>
+                                <span class="text-xs text-slate-400 font-mono">Editor Principal</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                                <span class="text-slate-200 text-sm font-medium flex items-center gap-3">
+                                    <i class="fa-solid fa-cube text-red-400 text-lg"></i> NetBeans
+                                </span>
+                                <span class="text-xs text-slate-400 font-mono">IDE Java</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- EXPERIENCIA Y FORMACIÓN (TRAYECTORIA) -->
+        <section id="trayectoria" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                <!-- Timeline: Experiencia Laboral -->
+                <div>
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Experiencia Laboral</h2>
+                    </div>
+
+                    <div class="relative border-l-2 border-slate-800 ml-4 space-y-8">
+
+                        <!-- Item 1 -->
+                        <div class="relative pl-8 group">
+                            <!-- Bullet -->
+                            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-2 border-cyan-400 group-hover:scale-125 group-hover:bg-cyan-400 transition-all"></div>
+                            
+                            <div class="glass-panel glass-panel-hover p-6 rounded-2xl border border-slate-800">
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                                    <h3 class="text-lg font-bold text-white">Prácticas en Empresa</h3>
+                                    <span class="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-medium">Marzo 2025 - Junio 2025</span>
+                                </div>
+                                <h4 class="text-slate-400 text-sm font-semibold mb-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-building text-slate-500"></i> Univertia
+                                </h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    Mantenimiento integral de equipos informáticos y resolución de incidencias en entornos corporativos de sistemas. Optimización de la infraestructura local.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="relative pl-8 group">
+                            <!-- Bullet -->
+                            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-2 border-slate-600 group-hover:scale-125 group-hover:border-cyan-400 transition-all"></div>
+                            
+                            <div class="glass-panel glass-panel-hover p-6 rounded-2xl border border-slate-800">
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                                    <h3 class="text-lg font-bold text-white">Técnico Informático</h3>
+                                    <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 text-xs font-mono">4 meses (Puntual)</span>
+                                </div>
+                                <h4 class="text-slate-400 text-sm font-semibold mb-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-building text-slate-500"></i> Univertia
+                                </h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    Trabajo puntual en periodos y semanas variadas realizando tareas técnicas de soporte, mantenimiento preventivo y correctivo de hardware y software.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Timeline: Formación Académica -->
+                <div>
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Formación Académica</h2>
+                    </div>
+
+                    <div class="relative border-l-2 border-slate-800 ml-4 space-y-8">
+
+                        <!-- Edu 1 -->
+                        <div class="relative pl-8 group">
+                            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-2 border-purple-400 group-hover:scale-125 group-hover:bg-purple-400 transition-all"></div>
+                            
+                            <div class="glass-panel glass-panel-hover p-6 rounded-2xl border border-slate-800">
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                                    <h3 class="text-lg font-bold text-white">Grado Superior DAM</h3>
+                                    <span class="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-mono font-medium">Sept 2025 - Actualidad</span>
+                                </div>
+                                <p class="text-slate-400 text-sm font-medium mb-2">Desarrollo de Aplicaciones Multiplataforma</p>
+                                <p class="text-slate-500 text-xs flex items-center gap-1">
+                                    <i class="fa-solid fa-location-dot"></i> Medac Aventura (Jaén)
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Edu 2 (Destacado) -->
+                        <div class="relative pl-8 group">
+                            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-2 border-amber-400 group-hover:scale-125 group-hover:bg-amber-400 transition-all"></div>
+                            
+                            <div class="glass-panel glass-panel-hover p-6 rounded-2xl border border-amber-500/30 bg-amber-500/5 relative overflow-hidden">
+                                <!-- Badge Floating -->
+                                <div class="absolute top-0 right-0 bg-gradient-to-l from-amber-500 to-orange-500 text-slate-950 font-bold text-[10px] uppercase px-3 py-1 rounded-bl-xl shadow-md">
+                                    ★ Reconocimiento
+                                </div>
+
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                                    <h3 class="text-lg font-bold text-white">Grado Medio SMR</h3>
+                                    <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-mono">Sept 2023 - Junio 2025</span>
+                                </div>
+                                <p class="text-slate-300 text-sm font-medium mb-1">Sistemas Microinformáticos y Redes</p>
+                                <p class="text-slate-500 text-xs flex items-center gap-1 mb-3">
+                                    <i class="fa-solid fa-location-dot"></i> Medac Vandelvira (Jaén)
+                                </p>
+                                <div class="mt-3 inline-flex items-center gap-2 text-amber-300 bg-amber-400/10 border border-amber-400/30 px-3 py-1.5 rounded-lg text-xs font-semibold">
+                                    <i class="fa-solid fa-trophy text-amber-400"></i> Mejor expediente de la promoción
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edu 3 -->
+                        <div class="relative pl-8 group">
+                            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-2 border-slate-600 group-hover:scale-125 group-hover:border-purple-400 transition-all"></div>
+                            
+                            <div class="glass-panel glass-panel-hover p-6 rounded-2xl border border-slate-800">
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                                    <h3 class="text-lg font-bold text-white">Bachillerato CC.SS.</h3>
+                                    <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 text-xs font-mono">Sept 2020 - Junio 2022</span>
+                                </div>
+                                <p class="text-slate-500 text-xs flex items-center gap-1">
+                                    <i class="fa-solid fa-location-dot"></i> IES Fernando III El Santo (Priego de Córdoba)
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- PROYECTOS DESTACADOS -->
+        <section id="proyectos" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-cyan-400 text-sm font-mono tracking-widest uppercase">Portafolio</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-2">Proyectos Destacados</h2>
+                <p class="text-slate-400 mt-4 text-base sm:text-lg">Demostración práctica de mis habilidades de desarrollo y resolución de problemas.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Proyecto 1: Monopoly Java -->
+                <div class="glass-panel glass-panel-hover rounded-3xl p-8 border border-slate-800 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-gamepad"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+                                Proyecto Integrador 1º DAM
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Juego Monopoly por Consola</h3>
+                        
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            Proyecto integrador de fin de curso desarrollado íntegramente en Java. Implementa la arquitectura orientada a objetos y lógica matemática compleja del clásico juego de mesa para ejecución limpia y estructurada a través de consola.
+                        </p>
+
+                        <div class="space-y-2 mb-6 text-xs text-slate-400">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-cyan-400"></i> Lógica de compra-venta de propiedades y transacciones
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-cyan-400"></i> Gestión de turnos, dados y bancarrota
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-cyan-400"></i> Estructura multiclase limpia y modular
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                        <div class="flex gap-2">
+                            <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 text-xs font-mono">Java</span>
+                            <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 text-xs font-mono">POO</span>
+                            <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 text-xs font-mono">Algoritmos</span>
+                        </div>
+                        <a href="https://www.unsitiogenial.es" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                            Ver más <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 2: Gestión de Pedidos y Citas -->
+                <div class="glass-panel glass-panel-hover rounded-3xl p-8 border border-slate-800 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-mono">
+                                Software a Medida
+                            </span>
+                        </div>
+
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">Gestión de Pedidos y Citas</h3>
+
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            Aplicación desarrollada a medida para la optimización de procesos operativos, gestión de agendas y pedidos enfocada en negocios familiares. Diseñada para agilizar la atención al cliente y el seguimiento de pedidos.
+                        </p>
+
+                        <div class="space-y-2 mb-6 text-xs text-slate-400">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-purple-400"></i> Optimización de agendamiento y turnos
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-purple-400"></i> Control de inventario y pedidos pendientes
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-purple-400"></i> Interfaz práctica e intuitiva para usuarios
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                        <div class="flex gap-2">
+                            <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 text-xs font-mono">Database</span>
+                            <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 text-xs font-mono">UI/UX</span>
+                            <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 text-xs font-mono">Gestión</span>
+                        </div>
+                        <a href="https://www.unsitiogenial.es" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                            Ver más <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- IDIOMAS Y CERTIFICACIONES -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Certification Card -->
+                <div class="glass-panel p-8 rounded-3xl border border-yellow-500/20 bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/20 flex items-center gap-6">
+                    <div class="w-16 h-16 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 flex items-center justify-center text-3xl shrink-0">
+                        <i class="fa-brands fa-aws"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono text-yellow-400 uppercase tracking-wider font-semibold">Insignia Oficial</span>
+                        <h3 class="text-xl font-bold text-white mt-1">AWS Cloud Quest</h3>
+                        <p class="text-slate-400 text-sm mt-1">Formación e insignia práctica de Amazon Web Services (AWS) en desarrollo e infraestructura cloud.</p>
+                    </div>
+                </div>
+
+                <!-- Language Card -->
+                <div class="glass-panel p-8 rounded-3xl border border-emerald-500/20 bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/20 flex items-center gap-6">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-3xl shrink-0">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">Certificación de Idioma</span>
+                        <h3 class="text-xl font-bold text-white mt-1">Nivel B2 de Inglés</h3>
+                        <p class="text-slate-400 text-sm mt-1">Certificado por <strong class="text-slate-200">Trinity College London</strong>. Dominio fluido técnico y conversacional.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- CONTACTO -->
+        <section id="contacto" class="py-20 bg-slate-900/60 relative">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white tracking-tight">Contacto</h2>
+                <p class="mt-2 text-slate-400">¿Tienes alguna propuesta o consulta? Escríbeme directamente</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                <!-- Datos directos de contacto -->
+                <div class="space-y-6 bg-slate-900/80 p-8 rounded-2xl border border-slate-800">
+                    <h3 class="text-xl font-semibold text-white mb-4">Información de Contacto</h3>
+                    <div class="flex items-center space-x-4 text-slate-300">
+                    <div class="p-3 bg-cyan-500/10 text-cyan-400 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400">Email</p>
+                        <a href="mailto:jalcalahinojosa@gmail.com" class="hover:text-cyan-400 transition-colors">jalcalahinojosa@gmail.com</a>
+                    </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4 text-slate-300">
+                    <div class="p-3 bg-cyan-500/10 text-cyan-400 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400">Teléfono</p>
+                        <a href="tel:653187506" class="hover:text-cyan-400 transition-colors">653 187 506</a>
+                    </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4 text-slate-300">
+                    <div class="p-3 bg-cyan-500/10 text-cyan-400 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400">Web</p>
+                        <a href="https://joseantonioah.netlify.app" target="_blank" class="hover:text-cyan-400 transition-colors">joseantonioah.netlify.app</a>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Formulario configurado para Netlify -->
+                    <form name="contacto" method="POST" data-netlify="true" class="space-y-4 bg-slate-900/80 p-8 rounded-2xl border border-slate-800">
+                        <!-- Input oculto obligatorio para Netlify Forms -->
+                        <input type="hidden" name="form-name" value="contacto" />
+
+                        <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Nombre</label>
+                        <input type="text" name="nombre" required placeholder="Tu nombre" class="w-full px-4 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
+                        </div>
+
+                        <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Correo electrónico</label>
+                        <input type="email" name="email" required placeholder="tu@email.com" class="w-full px-4 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
+                        </div>
+
+                        <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Mensaje</label>
+                        <textarea name="mensaje" rows="4" required placeholder="Escribe tu mensaje..." class="w-full px-4 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 px-6 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-medium shadow-lg shadow-cyan-500/25 transition-all">
+                        Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800/80 py-8 text-center text-slate-500 text-sm relative z-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© <span id="current-year"></span> Jose Antonio Alcalá. Todos los derechos reservados.</p>
+            <div class="flex items-center gap-6">
+                <a href="mailto:jalcalahinojosa@gmail.com" class="hover:text-cyan-400 transition-colors"><i class="fa-regular fa-envelope text-lg"></i></a>
+                <a href="tel:653187506" class="hover:text-cyan-400 transition-colors"><i class="fa-solid fa-phone text-lg"></i></a>
+                <a href="https://www.unsitiogenial.es" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors"><i class="fa-solid fa-globe text-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // Set dynamic current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle logic
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Form Submission Simulation
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const msgBox = document.getElementById('form-message');
+            
+            // Show Success Notification
+            msgBox.className = "mt-4 p-4 rounded-xl text-center text-sm font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 block animate-bounce";
+            msgBox.innerHTML = '<i class="fa-solid fa-circle-check mr-2"></i> ¡Mensaje enviado con éxito! Me pondré en contacto contigo muy pronto.';
+            
+            // Reset Form
+            document.getElementById('contact-form').reset();
+
+            setTimeout(() => {
+                msgBox.className = "hidden";
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

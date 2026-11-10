@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\jalca\\Downloads\\openpdf-1.3.40.jar"
+    ]
+}
